@@ -5,7 +5,7 @@ import Recommend from '@/views/recommend/index.vue'
 import Singer from '@/views/singer/index.vue'
 import Rank from '@/views/rank'
 import Search from '@/views/search'
-import RecommendDetail from '@/views/singer/detail'
+import RecommendDetail from '@/views/recommend/detail'
 import SingerDetail from '@/views/singer/detail'
 
 Vue.use(Router)

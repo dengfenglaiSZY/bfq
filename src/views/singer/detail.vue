@@ -1,7 +1,7 @@
 <template>
 
     <transition name="slide">
-        <singer-list :title="title" :bgUrl="bgUrl" :singerList="singerList"></singer-list>
+        <music-list :title="title" :bgUrl="bgUrl" :songList="songList"></music-list>
     </transition>
 
 </template>
@@ -9,14 +9,14 @@
 
 
 <script>
-import SingerList from '@/components/singerList'
-import {getCdInfo} from '@/api'
+import MusicList from '@/components/musicList'
+import {getSingerInfo} from '@/api'
   export default{
     data(){
         return{
           title:"",
           bgUrl:"",
-          singerList:[]
+          songList:[],
         }
     },
     created(){
@@ -24,16 +24,20 @@ import {getCdInfo} from '@/api'
     },
     methods:{
       getSingerInfoList(){
-        getSingerInfo().then((res) => {
-          this.title = res.data.cdlist[0].dissname;
-          this.bgUrl = res.data.cdlist[0].logo;
-          this.songList = res.data.cdlist[0].singerlist
-          console.log(this.title)
+        getSingerInfo(this.$route.params.id).then((res) => {
+          let arr = [];
+          this.title = res.data.singer_name;
+          this.bgUrl = `https://y.gtimg.cn/music/photo_new/T001R300x300M000${res.data.singer_mid}.jpg?max_age=2592000`;
+          for(var i in res.data.list){
+            arr.push(res.data.list[i].musicData)
+          }
+          this.songList =arr
         })
-      }
+      },
+
     },
     components:{
-      SingerList
+      MusicList
     }
   }
 </script>

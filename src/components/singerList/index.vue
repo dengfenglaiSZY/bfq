@@ -1,10 +1,10 @@
 <template>
-    <scroll class="list-view" ref="listView" @scroll="scroll" :listenScroll="true" :probeType="3">
+    <scroll class="list-view" ref="listView" @scroll="scroll" :listenScroll=true :probeType=3>
         <ul>
-          <li class="list-group" ref="listGroup" v-for="a in list" :key="a.key" @click="detail(a.id)">
+          <li class="list-group" ref="listGroup" v-for="a in list" :key="a.key">
               <h2 class="list-group-title">{{a.title}}</h2>
               <ul>
-                <li class="list-group-item" v-for="b in a.items" :key="b.key">
+                <li class="list-group-item" v-for="b in a.items" :key="b.key" @click="detail(b.id)">
                     <img alt="" class="avatar" :src="b.img">
                     <span class="name">{{b.name}}</span>
                 </li>
@@ -22,13 +22,12 @@
         <!-- <div class="loading-container" v-show="isloading">
             <loading></loading>
         </div> -->
+        <router-view></router-view>
   </scroll>
 </template>
 
 <script>
 import Scroll from '@/components/scroll'
-import {getSingerInfo} from '@/api'
-import Loading from "@/components/loading";
 export default {
     props:{
         list:{
@@ -87,8 +86,6 @@ export default {
         scroll(pos){
             this.scrollY = pos.y
         },
-
-
         //获取所有li单独的高度
         getLiHeight(){
             const  list = this.$refs.listGroup;
@@ -101,7 +98,7 @@ export default {
         },
         detail(id){
           this.$router.push({path:`/singer/${id}`})
-      }
+        },
     },
     watch:{
         scrollY(v){
